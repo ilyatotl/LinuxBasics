@@ -23,6 +23,7 @@ int main() {
     printf("Available commands: \tls\tcd\trm\tmkdir\texit\n");
     char *curDir;
     while (true) {
+        curDir = NULL;
     	curDir = getcwd(curDir, 100);
     	printf("ilya-bash: %s$ ", curDir);
     	char command[10];
@@ -56,6 +57,7 @@ int main() {
     	} else {
     	    printf("Unknown command %s, try again\n", command);
     	}
+    	free(curDir);
     }
     exit(0);
 }
