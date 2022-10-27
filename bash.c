@@ -59,5 +59,6 @@ int main() {
     	}
     	free(curDir);
     }
+    free(curDir);
     exit(0);
 }
