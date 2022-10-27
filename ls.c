@@ -22,5 +22,6 @@ int main() {
     }
     printf("\n");
     closedir(dir);
+    free(curDir);
     exit(0);
 }
