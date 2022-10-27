@@ -20,7 +20,7 @@ void listDirectories(char *curDir) {
 }
 
 int main() {
-    printf("Available commands: ls\tcd\texit\n");
+    printf("Available commands: \tls\tcd\trm\tmkdir\texit\n");
     char *curDir;
     while (true) {
     	curDir = getcwd(curDir, 100);
@@ -29,19 +29,33 @@ int main() {
     	scanf("%s", command);
     	if (strcmp(command, "ls") == 0) {
     	    listDirectories(curDir);
+    	    printf("\n");
     	} else if (strcmp(command, "cd") == 0) {
     	    char path[100];
     	    scanf("%s", path);
     	    if (chdir(path) != 0) {
-    	        printf("Ошибка в открытии директории %s/%s", curDir, path);
+    	        printf("Ошибка в открытии директории %s/%s\n", curDir, path);
+    	    }
+    	} else if (strcmp(command, "rm") == 0) {
+    	    char path[100];
+    	    scanf("%s", path);
+    	    if (remove(path) == -1) {
+    	        printf("Ошибка удаления файла %s/%s\n", curDir, path);
+    	    }
+    	} else if (strcmp(command, "mkdir") == 0) {
+    	    char path[100];
+    	    scanf("%s", path);
+    	    mode_t mode = (S_IRWXU | S_IRWXG | S_IRWXO);
+    	    char absolutePath[256];
+    	    snprintf(absolutePath, sizeof(absolutePath), "%s/%s", curDir, path);
+    	    if (mkdir(absolutePath, mode) != 0) {
+    	       printf("Error in creating a directory, try again\n");
     	    }
     	} else if (strcmp(command, "exit") == 0) {
     	    break;
     	} else {
-    	    printf("Unknown command %s, try again", command);
+    	    printf("Unknown command %s, try again\n", command);
     	}
-    	printf("\n");
-    	free(curDir);
     }
     exit(0);
 }
